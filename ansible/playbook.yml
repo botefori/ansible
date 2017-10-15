@@ -37,13 +37,30 @@
          name: git
 
          state: latest
-
-     - name: Install PHP CLI
+     - name: Install nginx webserver
 
        become: true
 
        apt:
 
-         name: php5.5.9-cli
+        name: nginx
+
+        state: latest
+
+     - name: add PHP 7 ppa repository
+
+       become: true
+
+       apt_repository:
+
+            repo: 'ppa:ondrej/php'
+
+     - name: Install PHP 7.1 CLI
+
+       become: true
+
+       apt:
+
+         name: php7.1-cli
 
          state: latest
