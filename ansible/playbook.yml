@@ -1,0 +1,49 @@
+---
+- hosts: gcloud
+
+  tasks:
+     - ping: ~
+     - name: Update APT pakage manager repositories cache
+
+       become: true
+
+       apt:
+
+         update_cache: yes
+
+     - name: Upgrade installed pakages
+
+       become: true
+
+       apt:
+
+         upgrade: dist
+
+
+     - name: Install cowsay - it's probabily important
+
+       apt:
+
+         name: cowsay
+       become: true
+
+
+     - name: Install Git VSC
+
+       become: true
+
+       apt:
+
+         name: git
+
+         state: latest
+
+     - name: Install PHP CLI
+
+       become: true
+
+       apt:
+
+         name: php5.5.9-cli
+
+         state: latest
