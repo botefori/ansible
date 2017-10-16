@@ -1,0 +1,32 @@
+
+**  Checking ansible version result:
+
+ $ ansible --version
+
+ansible 2.4.0.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = [u'/home/icamara/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python2.7/dist-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 2.7.12 (default, Nov 19 2016, 06:48:10) [GCC 5.4.0 20160609]
+
+
+
+** Running ls command on specifique host ( icamaragcloud )
+
+$ ansible -i hosts.ini  icamaragcloud -m command -a "ls /"
+
+
+ansible -i hosts.ini  icamaragcloud -m ping
+
+** The ansible play-book command
+
+$ ansible-playbook playbook.yml -i hosts.ini
+
+ ** ssh command when you have more than one ssh key
+
+  ssh ~/.ssh/gvloud-ssh-key.pub icamaraus@35.190.211.3
+
+
+
+
