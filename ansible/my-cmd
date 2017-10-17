@@ -17,7 +17,7 @@ $ ansible-playbook playbook.yml -i hosts.ini
 
  ** ssh command when you have more than one ssh key
 
-  ssh -i ~/.ssh/gvloud-ssh-key.pub icamaraus@35.190.211.3
+  ssh -i ~/.ssh/gcloud-ssh-key.pub icamaraus@35.190.211.3
 
 
 ** Login in mysql server and getting default users

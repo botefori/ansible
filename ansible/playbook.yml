@@ -1,6 +1,7 @@
 ---
 - hosts: gcloud
-
+  vars:
+     symfony_root_dir: /var/www/project
   tasks:
      - ping: ~
      - name: Update APT pakage manager repositories cache
@@ -18,6 +19,14 @@
        apt:
          name: cowsay
        become: true
+
+     - name: Install low-level utilities
+       become: true
+       apt:
+         name: "{{ item }}"
+       with_items:
+         - zip
+         - unzip
 
 
      - name: Install Git VSC
@@ -54,6 +63,7 @@
          - php7.1-fpm
          - php7.1-mysql
          - php7.1-intl
+         - php7.1-xml
 
      - name: Set date.timezone for CLI
        become: true
@@ -68,3 +78,43 @@
          path: /etc/php/7.1/fpm/php.ini
          regexp: "date.timezone ="
          line: "date.timezone = UTC"
+
+     - name: Create project directory and set its permissions
+       become: true
+       file:
+            path: "{{ symfony_root_dir }}"
+            state: directory
+            owner: "www-data"
+            group: "www-data"
+            recurse: yes
+
+     - name: Checkout Git repository
+       become: true
+       git:
+         repo: https://github.com/symfony/symfony-standard.git
+         dest: "{{ symfony_root_dir }}"
+         force: yes
+
+     - name: Download composer
+       script: scripts/install_composer.sh
+
+     - name: Move composer globaly
+       become: true
+       command: "mv composer.phar /usr/local/bin/composer"
+
+     - name: Set permissions on composer
+       become: true
+       file:
+          path: /usr/local/bin/composer
+          mode: "a+x"
+
+     - name: Install composer's dependencies
+       become: true
+       environment:
+            SYMFONY_ENV: "prod"
+       composer:
+            working_dir: "{{symfony_root_dir}}"
+            no_dev: true
+            optimize_autoloader: true
+            prefer_dist: true
+
