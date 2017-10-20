@@ -141,6 +141,7 @@
          state: directory
          mode: "a+rwx"
          recurse: yes
+       change_when: false
 
        tags:
          - permissions
